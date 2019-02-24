@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<p id="demo">Live GPS data will appear below:</p>
+
+<script>
+	setInterval(function() {
+		$.get('/get', function(data, status) {
+			document.getElementById("demo").innerHTML += data
+		})
+	}, 50);
+</script>
+
+</body>
+</html>
