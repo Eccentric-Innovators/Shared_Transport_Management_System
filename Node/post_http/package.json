@@ -1,0 +1,16 @@
+{
+  "name": "post_http",
+  "version": "1.0.0",
+  "description": "Receive HTTP POST messages and display to front end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "Malolan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "morgan": "^1.9.1"
+  }
+}
