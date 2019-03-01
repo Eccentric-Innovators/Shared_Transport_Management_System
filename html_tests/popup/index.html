@@ -1,0 +1,33 @@
+<html>
+    <title>Mouse Over pop-up</title>
+    <body>
+        <style>
+            .overlay{
+                height: 10%;
+                width: 0;
+                position: fixed;
+                top: 35px;
+                left: 35px;
+                background-color: rgba(0,255,255, 0.7);
+                overflow-x: hidden;
+                transition: 0.2s;
+                font-size: 15;
+            }
+        </style>
+        <span style="font-size:30px;" onmouseover="openNav()" onmouseout="closeNav()">&#9776;</span>
+        <div id="myNav" class="overlay">
+            &nbsp;Index<br>
+            &nbsp;Projects<br>
+            &nbsp;Profile<br>
+            &nbsp;About<br>
+        </div>
+        <script>
+            function openNav() {
+                document.getElementById("myNav").style.width = '3.7%';
+            }    
+            function closeNav() {
+                document.getElementById("myNav").style.width = '0';
+            }
+        </script>
+    </body>
+</html>
