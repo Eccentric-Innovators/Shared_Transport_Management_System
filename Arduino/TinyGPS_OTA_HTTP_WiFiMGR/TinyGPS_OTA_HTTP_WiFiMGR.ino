@@ -11,10 +11,10 @@
 
 WiFiClient espClient;
 
-const char* url = "http://ec78a375.ngrok.io/locupdate";
+const char* url = "http://995d9d0c.ngrok.io/locupdate";
 
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 4800;
+static const int RXPin = D1, TXPin = D2;
+static const uint32_t GPSBaud = 9600;
 
 TinyGPSPlus gps;
 SoftwareSerial ss(RXPin, TXPin);
@@ -72,9 +72,9 @@ void setup() {
 }
 
 void loop() {
-  char* data;
-  sprintf(data, "{\"sats\": %f, \"hdop\": %f, \"lat\": %f,\"lng\": %f, \"course\": %f, \"speed\": %f}", gps.satellites.value(), gps.hdop.value(), gps.location.lat(), gps.location.lng(), gps.course.deg(), gps.speed.kmph());
-  
+  char data[130];
+  snprintf(data, 130, "{\"sats\": %d, \"hdop\": %0.3f, \"lat\": %0.5f,\"lng\": %0.5f, \"course\": %0.3f, \"speed\": %0.2f}", gps.satellites.value(), gps.hdop.value(), gps.location.lat(), gps.location.lng(), gps.course.deg(), gps.speed.kmph());
+  Serial.println(data);
   if(WiFi.status()== WL_CONNECTED){
     HTTPClient http;
     
@@ -91,5 +91,15 @@ void loop() {
     Serial.println("Error in WiFi connection");
   }
 
-  delay(1000);
+  smartDelay(1000);
+}
+
+static void smartDelay(unsigned long ms)
+{
+  unsigned long start = millis();
+  do 
+  {
+    while (ss.available())
+      gps.encode(ss.read());
+  } while (millis() - start < ms);
 }
