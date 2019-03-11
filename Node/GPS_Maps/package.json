@@ -8,5 +8,8 @@
     "start": "node index"
   },
   "author": "Eccentric Innovators",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.4.18"
+  }
 }
