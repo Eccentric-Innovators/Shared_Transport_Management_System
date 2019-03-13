@@ -20,7 +20,7 @@ var loc = {}
 var map, marker
 
 setInterval(function() {
-	$.get('/get', function(data, status) {
+	$.get('/stats', function(data, status) {
 		loc = data
 		if (loc != "") {
 			/*$.get('https://roads.googleapis.com/v1/snapToRoads?path='+loc.lat+','+loc.lng+'&interpolate=true&key=AIzaSyAhlIqEQw9gC-ye7O5qOOE2itj4VImKBMw', function(data, status) {

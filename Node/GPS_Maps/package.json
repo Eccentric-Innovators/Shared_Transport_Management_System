@@ -10,6 +10,8 @@
   "author": "Eccentric Innovators",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.16.4",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.18"
   }
 }

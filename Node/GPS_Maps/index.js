@@ -1,9 +1,26 @@
 var express = require('express');
 var app = express();
 //var morgan = require('morgan');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
-var msg = {}
+var url = 'mongodb://localhost:27017/';
+
+if(!process.argv[2]) {
+  url += "STMS_test"
+} else {
+  url += process.argv[2];
+}
+
+var connect = mongoose.connect(url);
+
+connect.then((db) => {
+	console.log('Connected to Database Server.');
+}, (err) => {
+	console.log(err);
+});
+
+var statsRouter = require('./routes/statsRouter');
 
 app.use(express.static('./static/'));
 //app.use(morgan('dev'));
@@ -14,23 +31,11 @@ app.get('/', function(req, res) {
 	res.sendFile("index.html")
 });
 
-app.post('/locupdate', (req, res) => {
-  console.log(req.body);
-  msg = {lat: req.body.lat, lng: req.body.lng}
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Received data.');
-});
+app.use('/stats', statsRouter);
 
-var server = app.listen(80, function () {
+var server = app.listen(8080, function () {
    var host = server.address().address
    var port = server.address().port
    
    console.log("Example app listening at http://%s:%s", host, port)
-});
-
-app.get('/get', function(req, res) {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-	res.json(msg);
 });
