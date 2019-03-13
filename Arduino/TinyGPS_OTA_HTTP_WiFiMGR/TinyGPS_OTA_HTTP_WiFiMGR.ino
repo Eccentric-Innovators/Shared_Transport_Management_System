@@ -11,7 +11,9 @@
 
 WiFiClient espClient;
 
-const char* url = "http://995d9d0c.ngrok.io/locupdate";
+const char* url = "http://995d9d0c.ngrok.io/stats";
+
+int vehicleNo = 1, driverId = 1033;
 
 static const int RXPin = D1, TXPin = D2;
 static const uint32_t GPSBaud = 9600;
@@ -69,11 +71,37 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   digitalWrite(2,HIGH);
+  long m = millis();
+  while(WiFi.status()!= WL_CONNECTED) {
+    if(millis() - m > 6000) {
+      Serial.println("Connection Error.");
+      break;
+    }
+  }
+  if(WiFi.status()== WL_CONNECTED){
+    HTTPClient http;
+
+    char data[50];
+
+    snprintf(data, 50, "{\"driverId\": %d, \"vehicleNo\": %d", driverId, vehicleNo);
+    
+    http.begin(strcat(url, "/begin"));
+    http.addHeader("Content-Type", "application/json");
+    
+    int httpCode = http.POST(data);
+    String payload = http.getString();
+    
+    Serial.println(httpCode);
+    Serial.println(payload);
+    http.end();
+  }else{
+    Serial.println("Error in WiFi connection");
+  }
 }
 
 void loop() {
   char data[130];
-  snprintf(data, 130, "{\"sats\": %d, \"hdop\": %0.3f, \"lat\": %0.5f,\"lng\": %0.5f, \"course\": %0.3f, \"speed\": %0.2f}", gps.satellites.value(), gps.hdop.value(), gps.location.lat(), gps.location.lng(), gps.course.deg(), gps.speed.kmph());
+  snprintf(data, 130, "{\"vehicleNo\": %d, {\"sats\": %d, \"hdop\": %0.3f, \"lat\": %0.5f,\"lng\": %0.5f, \"course\": %0.3f, \"speed\": %0.2f}}", vehicleNo, gps.satellites.value(), gps.hdop.value(), gps.location.lat(), gps.location.lng(), gps.course.deg(), gps.speed.kmph());
   Serial.println(data);
   if(WiFi.status()== WL_CONNECTED){
     HTTPClient http;
