@@ -22,7 +22,7 @@ if(!process.argv[3]) {
 if(!process.argv[4]) {
   port = 8080;
 } else {
-  port = int(process.argv[4]);
+  port = parseInt(process.argv[4]);
 }
 
 var connect = mongoose.connect(url);
