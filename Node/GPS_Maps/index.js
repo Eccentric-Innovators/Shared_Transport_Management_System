@@ -4,12 +4,25 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var url = 'mongodb://localhost:27017/';
+var url = 'mongodb://localhost:';
+var port = 8080;
 
 if(!process.argv[2]) {
+  url += "27017/"
+} else {
+  url += process.argv[2]+"/";
+}
+
+if(!process.argv[3]) {
   url += "STMS_test"
 } else {
-  url += process.argv[2];
+  url += process.argv[3];
+}
+
+if(!process.argv[4]) {
+  port = 8080;
+} else {
+  port = int(process.argv[4]);
 }
 
 var connect = mongoose.connect(url);
@@ -33,7 +46,7 @@ app.get('/', function(req, res) {
 
 app.use('/stats', statsRouter);
 
-var server = app.listen(8080, function () {
+var server = app.listen(port, function () {
    var host = server.address().address
    var port = server.address().port
    

@@ -4,8 +4,8 @@
   "description": "Integrating Real time GPS values with GMaps",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "test": "node index",
+    "start": "node index 8080 STMS 8443"
   },
   "author": "Eccentric Innovators",
   "license": "ISC",
