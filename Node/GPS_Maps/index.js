@@ -5,7 +5,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var url = 'mongodb://localhost:27017/';
-var port = 8080;
+var port = 80;
+var port2 = 443
 
 if(!process.argv[2]) {
   url += "STMS_test"
@@ -39,4 +40,13 @@ var server = app.listen(port, function () {
    var port = server.address().port
    
    console.log("Example app listening at http://%s:%s", host, port)
+});
+
+var app2 = app;
+
+var server2 = app2.listen(port2, function () {
+   var host = server2.address().address
+   var port2 = server2.address().port
+   
+   console.log("Example app listening at http://%s:%s", host, port2)
 });
