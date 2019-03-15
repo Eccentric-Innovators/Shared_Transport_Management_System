@@ -4,25 +4,13 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var url = 'mongodb://localhost:';
+var url = 'mongodb://localhost:27017/';
 var port = 8080;
 
 if(!process.argv[2]) {
-  url += "27017/"
-} else {
-  url += process.argv[2]+"/";
-}
-
-if(!process.argv[3]) {
   url += "STMS_test"
 } else {
   url += process.argv[3];
-}
-
-if(!process.argv[4]) {
-  port = 8080;
-} else {
-  port = parseInt(process.argv[4]);
 }
 
 var connect = mongoose.connect(url);
