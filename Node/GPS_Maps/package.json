@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node index",
-    "start": "node index"
+    "start": "node index STMS"
   },
   "author": "Eccentric Innovators",
   "license": "ISC",

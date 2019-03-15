@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var url = 'mongodb://localhost:27017/';
-var port = 8080;
+var port = 80;
 
 if(!process.argv[2]) {
   url += "STMS_test"
