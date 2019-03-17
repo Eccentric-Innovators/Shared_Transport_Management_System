@@ -44,19 +44,25 @@ router.route('/')
 .get((req, res) => {
     stats.findOne({createdAt: {'$gte': today.toDate(), '$lte': moment(today).endOf('day').toDate()}, vehicleNo: req.body.vehicleNo})
     .then((stat) => {
-        data = stat.data[stat.data.length-1]
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({lat: data.lat, lng: data.lng});
+        if(!stat) {
+            res.statusCode = 404;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({result: 'No data.'});
+        } else {
+            data = stat.data[stat.data.length-1]
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({lat: data.lat, lng: data.lng});
+        }
     }, (err) => {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'Update not done. Please retry.'});
+        res.json({result: 'No data.'});
     })
     .catch((err) => {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'Update not done. Please retry.'});
+        res.json({result: 'No data.'});
     });
 });
 

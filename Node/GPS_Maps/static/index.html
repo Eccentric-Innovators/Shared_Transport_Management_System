@@ -11,7 +11,10 @@
     </style>
   </head>
   <body>
-    <h3>My Google Maps Demo</h3>
+    <h3>My Google Maps Demo</h3><br>
+    Vehicle Number: <input type="text" id="vehicleNo"><br>
+    <input type="button" onclick="startTrack()" name="Start" value="Start"><br><br>
+    
     <!--The div element for the map -->
     <div id="map"></div>
     <script>
@@ -19,8 +22,10 @@
 var loc = {}
 var map, marker
 
+function startTrack() {
+  console.log(parseInt(document.getElementById('vehicleNo').value));
 setInterval(function() {
-	$.get('/stats', function(data, status) {
+	$.get('/stats', {vehicleNo: parseInt(document.getElementById('vehicleNo').value)}).done((data, status) => {
 		loc = data
 		if (loc != "") {
 			/*$.get('https://roads.googleapis.com/v1/snapToRoads?path='+loc.lat+','+loc.lng+'&interpolate=true&key=AIzaSyAhlIqEQw9gC-ye7O5qOOE2itj4VImKBMw', function(data, status) {
@@ -37,6 +42,7 @@ setInterval(function() {
 		}
 	})
 }, 50);
+}
 
 function initMap() {
   // The location of Home
