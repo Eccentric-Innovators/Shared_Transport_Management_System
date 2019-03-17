@@ -24,6 +24,9 @@ connect.then((db) => {
 });
 
 var statsRouter = require('./routes/statsRouter');
+var passengerRouter = require('./routes/passengerRouter');
+var driverRouter = require('./routes/driverRouter');
+var vehicleRouter = require('./routes/vehicleRouter');
 
 app.set('views', './views');
 app.set('view engine', 'jade');
@@ -38,6 +41,9 @@ app.get('/', function(req, res) {
 });
 
 app.use('/stats', statsRouter);
+app.use('/passengers', passengerRouter);
+app.use('/drivers', driverRouter);
+app.use('/vehicles', vehicleRouter);
 
 app.use(function(req, res, next) {
 	next(createError(404));
