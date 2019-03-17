@@ -24,6 +24,9 @@ connect.then((db) => {
 
 var statsRouter = require('./routes/statsRouter');
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
 app.use(express.static('./static/'));
 //app.use(morgan('dev'));
 app.use(bodyParser.json())
