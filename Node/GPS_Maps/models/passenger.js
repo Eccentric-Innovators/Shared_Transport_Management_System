@@ -3,23 +3,23 @@ const Schema = mongoose.Schema;
 
 var passengerSchema = new Schema({
     passengerId: {
-        type: int,
+        type: Number,
         required: true
     },
     passengerName: {
         type: String
     },
     phoneNo: {
-        type: int
+        type: Number
     },
     address: {
         type: String
     },
     vehicleNo: {
-        type: int
+        type: Number
     },
     stopId: {
-        type: int
+        type: Number
     }
 });
 

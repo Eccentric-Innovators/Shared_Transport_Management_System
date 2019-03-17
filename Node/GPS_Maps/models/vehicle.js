@@ -3,26 +3,26 @@ const Schema = mongoose.Schema;
 
 var stopSchema = new Schema({
     stopId: {
-        type: int,
+        type: Number,
         required: true
     },
     lat: {
-        type: double,
+        type: Number,
         required: true
     },
     lng: {
-        type: double,
+        type: Number,
         required: true
     }
 });
 
 var vehicleSchema = new Schema({
     vehicleNo: {
-        type: int,
+        type: Number,
         required: true
     },
     POC_No: {
-        type: int,
+        type: Number,
         required: true
     },
     route: [stopSchema]
