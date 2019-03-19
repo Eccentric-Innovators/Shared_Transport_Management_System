@@ -16,13 +16,17 @@ router.route('/')
     stats.findOne({createdAt: {'$gte': today.toDate(), '$lte': moment(today).endOf('day').toDate()}, vehicleNo: req.body.vehicleNo})
     .then((stat) => {
         if(stat != null) {
+            console.log(req.body.data);
+            console.log(stat.data);
             stat.data.push(req.body.data);
+            console.log(stat.data)
             stat.save()
             .then((stat) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json({result: 'ok'});
             }, (err) => {
+                console.log(err);
                 res.statusCode = 500;
                 res.setHeader('Content-Type', 'application/json');
                 res.json({result: 'Update not done. Please retry.'});
@@ -42,7 +46,7 @@ router.route('/')
     });
 })
 .get((req, res) => {
-    stats.findOne({createdAt: {'$gte': today.toDate(), '$lte': moment(today).endOf('day').toDate()}, vehicleNo: req.body.vehicleNo})
+    stats.findOne({createdAt: {'$gte': today.toDate(), '$lte': moment(today).endOf('day').toDate()}, vehicleNo: req.query.vehicleNo})
     .then((stat) => {
         if(!stat) {
             res.statusCode = 404;
