@@ -32,12 +32,12 @@ app.set('views', './views');
 app.set('view engine', 'jade');
 
 // SSL stuff
-app.get('/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM', function(req, res) {
+app.get(__dirname+'/static/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM', function(req, res) {
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/plain');
 	res.sendFile(".well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM");
 });
-app.get('/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8', function(req, res) {
+app.get(__dirname+'/static/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8', function(req, res) {
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/plain');
 	res.sendFile(".well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8");
