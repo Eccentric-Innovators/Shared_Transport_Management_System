@@ -5,6 +5,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var fs = require('fs');
+var https = require('https');
 
 var url = 'mongodb://localhost:27017/';
 var port = 80;
@@ -83,11 +84,13 @@ var server = app.listen(port, function () {
    console.log("Example app listening at http://%s:%s", host, port)
 });
 
-var app2 = app;
+var options = {
+	key: fs.readFileSync(__dirname+'/private.key'),
+	cert: fs.readFileSync(__dirname+'/certificate.crt')
+};
 
-var server2 = app2.listen(port2, function () {
-   var host = server2.address().address
-   var port2 = server2.address().port
-   
-   console.log("Example app listening at http://%s:%s", host, port2)
+var secureServer = https.createServer(options, app);
+
+secureServer.listen(app.get('secPort'), () => {
+	console.log('Secure server listening on port ', app.get('secPort'));
 });
