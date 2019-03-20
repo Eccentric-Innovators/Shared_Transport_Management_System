@@ -91,6 +91,6 @@ var options = {
 
 var secureServer = https.createServer(options, app);
 
-secureServer.listen(app.get('secPort'), () => {
+secureServer.listen(port2, () => {
 	console.log('Secure server listening on port ', app.get('secPort'));
 });
