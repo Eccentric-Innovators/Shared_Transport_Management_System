@@ -4,6 +4,7 @@ var app = express();
 //var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var fs = require('fs');
 
 var url = 'mongodb://localhost:27017/';
 var port = 80;
@@ -35,12 +36,16 @@ app.set('view engine', 'jade');
 app.get('/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM', function(req, res) {
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/plain');
-	res.sendFile(__dirname+"/static/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM");
+	fs.readFile(__dirname+"/static/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM", (err, data) => {
+		res.end(data);
+	});
 });
 app.get('/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8', function(req, res) {
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/plain');
-	res.sendFile(__dirname+"/static/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8");
+	fs.readFile(__dirname+"/static/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8", (err, data) => {
+		res.end(data);
+	});
 });
 
 app.use(express.static('./static/'));
