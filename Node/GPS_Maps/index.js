@@ -36,8 +36,19 @@ app.use(express.static('./static/'));
 app.use(bodyParser.json())
 
 app.get('/', function(req, res) {
-	console.log("Got Request.")
 	res.sendFile("index.html")
+});
+
+// SSL stuff
+app.get('/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM', function(req, res) {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/plain');
+	res.sendFile(".well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM");
+});
+app.get('/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8', function(req, res) {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/plain');
+	res.sendFile(".well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8");
 });
 
 app.use('/stats', statsRouter);
