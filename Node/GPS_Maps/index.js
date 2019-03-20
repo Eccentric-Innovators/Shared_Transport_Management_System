@@ -31,14 +31,6 @@ var vehicleRouter = require('./routes/vehicleRouter');
 app.set('views', './views');
 app.set('view engine', 'jade');
 
-app.use(express.static('./static/'));
-//app.use(morgan('dev'));
-app.use(bodyParser.json())
-
-app.get('/', function(req, res) {
-	res.sendFile("index.html")
-});
-
 // SSL stuff
 app.get('/.well-known/acme-challenge/R_0b-H1WtBv1433XJ3mVllDX7I3hwEBSDDSn8hLKjOM', function(req, res) {
 	res.statusCode = 200;
@@ -49,6 +41,14 @@ app.get('/.well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'text/plain');
 	res.sendFile(".well-known/acme-challenge/kjEx1h2b4j4UJhhrglZ2hGVXy9CdWzQgk4orS7KFzN8");
+});
+
+app.use(express.static('./static/'));
+//app.use(morgan('dev'));
+app.use(bodyParser.json())
+
+app.get('/', function(req, res) {
+	res.sendFile("index.html")
 });
 
 app.use('/stats', statsRouter);
