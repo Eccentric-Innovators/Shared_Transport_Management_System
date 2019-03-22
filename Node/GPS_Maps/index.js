@@ -20,7 +20,7 @@ if(!process.argv[2]) {
 var connect = mongoose.connect(url);
 
 connect.then((db) => {
-	console.log('Connected to Database Server.');
+	console.log('Connected to Database Server.'+url);
 }, (err) => {
 	console.log(err);
 });
