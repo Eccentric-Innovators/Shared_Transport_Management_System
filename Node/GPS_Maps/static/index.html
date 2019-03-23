@@ -2,6 +2,7 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <head>
+      <div id='maps'>
     <style>
       /* Set the size of the div element that contains the map */
       #map {
@@ -20,7 +21,16 @@
     <script>
 // Initialize and add the map
 var loc = {}
-var map, marker
+var map, marker, gkey = '';
+
+window.onload = () => {
+  $.get('/key', (data, status) => {
+    gkey = data;
+    $.getScript('https://maps.googleapis.com/maps/api/js?key='+gkey, function( data, textStatus, jqxhr ) {
+      initMap();
+    });
+  });
+};
 
 function startTrack() {
   console.log(parseInt(document.getElementById('vehicleNo').value));
@@ -63,8 +73,6 @@ function initMap() {
     * The key parameter will contain your own API key (which is not needed for this tutorial)
     * The callback parameter executes the initMap() function
     -->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhlIqEQw9gC-ye7O5qOOE2itj4VImKBMw&callback=initMap">
-    </script>
+    </div>
   </body>
 </html>

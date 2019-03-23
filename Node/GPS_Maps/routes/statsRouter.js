@@ -13,13 +13,12 @@ router.use(bodyParser.json());
 
 router.route('/')
 .post((req, res) => {
+    console.log('Incoming stat POST.');
     stats.findOne({createdAt: {'$gte': today.toDate(), '$lte': moment(today).endOf('day').toDate()}, vehicleNo: req.body.vehicleNo})
     .then((stat) => {
         if(stat != null) {
             console.log(req.body.data);
-            console.log(stat.data);
             stat.data.push(req.body.data);
-            console.log(stat.data)
             stat.save()
             .then((stat) => {
                 res.statusCode = 200;
@@ -27,22 +26,26 @@ router.route('/')
                 res.json({result: 'ok'});
             }, (err) => {
                 console.log(err);
-                res.statusCode = 500;
+                res.statusCode = 0;
                 res.setHeader('Content-Type', 'application/json');
-                res.json({result: 'Update not done. Please retry.'});
+                res.json({result: 'Update not done. Please retry.', err: err});
             });
+        } else {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({result: 'Please begin first.'});
         }
     }, (err) => {
         console.log(err);
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'Update not done. Please retry.'});
+        res.json({result: 'Update not done. Please retry.', err: err});
     })
     .catch((err) => {
         console.log(err);
-        res.statusCode = 500;
+        res.statusCode = 418;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'Update not done. Please retry.'});
+        res.json({result: 'Update not done. Please retry.', err: err});
     });
 })
 .get((req, res) => {
@@ -61,12 +64,12 @@ router.route('/')
     }, (err) => {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'No data.'});
+        res.json({result: 'No data.', err: err});
     })
     .catch((err) => {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'No data.'});
+        res.json({result: 'No data.', err: err});
     });
 });
 
@@ -80,12 +83,12 @@ router.route('/begin')
     }, (err) => {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'Update not done. Please retry.'});
+        res.json({result: 'Update not done. Please retry.', err: err});
     })
     .catch((err) => {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.json({result: 'Update not done. Please retry.'});
+        res.json({result: 'Update not done. Please retry.', err: err});
     });
 });
 

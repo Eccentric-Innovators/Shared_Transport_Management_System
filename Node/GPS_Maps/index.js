@@ -7,6 +7,8 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var https = require('https');
 
+var config = require('./config');
+
 var url = 'mongodb://localhost:27017/';
 var port = 80;
 var port2 = 443
@@ -61,6 +63,12 @@ app.use('/stats', statsRouter);
 app.use('/passengers', passengerRouter);
 app.use('/drivers', driverRouter);
 app.use('/vehicles', vehicleRouter);
+
+app.get('/key', (req, res, next) => {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/plain');
+	res.end(config.gcloudKey);
+});
 
 app.use(function(req, res, next) {
 	next(createError(404));
