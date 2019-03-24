@@ -38,7 +38,7 @@ setInterval(function() {
 	$.get('/stats', {vehicleNo: parseInt(document.getElementById('vehicleNo').value)}).done((data, status) => {
 		loc = data
 		if (loc != "") {
-			/*$.get('https://roads.googleapis.com/v1/snapToRoads?path='+loc.lat+','+loc.lng+'&interpolate=true&key=AIzaSyAhlIqEQw9gC-ye7O5qOOE2itj4VImKBMw', function(data, status) {
+			$.get('https://roads.googleapis.com/v1/snapToRoads?path='+loc.lat+','+loc.lng+'&interpolate=true&key='+gkey, function(data, status) {
 				console.log(status)
 				if (data != "") {
 					loc.lat = data.snappedPoints[0].location.latitude
@@ -46,9 +46,9 @@ setInterval(function() {
 					map.setCenter(loc)
 					marker.setPosition(loc)
 				}
-			})*/
-			map.setCenter(loc)
-			marker.setPosition(loc)
+			})
+			/*map.setCenter(loc)
+			marker.setPosition(loc)*/
 		}
 	})
 }, 50);
