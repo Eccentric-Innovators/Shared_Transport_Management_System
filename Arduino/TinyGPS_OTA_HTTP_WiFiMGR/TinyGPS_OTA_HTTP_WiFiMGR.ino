@@ -11,7 +11,7 @@
 
 WiFiClient espClient;
 
-const char* url = "http://995d9d0c.ngrok.io/stats";
+char* url = "http://stms.ml/stats";
 
 int vehicleNo = 1, driverId = 1033;
 
@@ -81,11 +81,11 @@ void setup() {
   if(WiFi.status()== WL_CONNECTED){
     HTTPClient http;
 
-    char data[50];
+    char data[100];
 
-    snprintf(data, 50, "{\"driverId\": %d, \"vehicleNo\": %d", driverId, vehicleNo);
-    
-    http.begin(strcat(url, "/begin"));
+    snprintf(data, 100, "{\"driverId\": %d, \"vehicleNo\": %d}", driverId, vehicleNo);
+
+    http.begin("http://stms.ml/stats/begin");
     http.addHeader("Content-Type", "application/json");
     
     int httpCode = http.POST(data);
@@ -100,8 +100,8 @@ void setup() {
 }
 
 void loop() {
-  char data[130];
-  snprintf(data, 130, "{\"vehicleNo\": %d, {\"sats\": %d, \"hdop\": %0.3f, \"lat\": %0.5f,\"lng\": %0.5f, \"course\": %0.3f, \"speed\": %0.2f}}", vehicleNo, gps.satellites.value(), gps.hdop.value(), gps.location.lat(), gps.location.lng(), gps.course.deg(), gps.speed.kmph());
+  char data[200];
+  sprintf(data, "{\"vehicleNo\": %d, \"data\": {\"sats\": %d, \"hdop\": %.3f, \"lat\": %.5f, \"lng\": %.5f, \"course\": %.3f, \"speed\": %.3f }}", vehicleNo, gps.satellites.value(), gps.hdop.value(), gps.location.lat(), gps.location.lng(), gps.course.deg(), gps.speed.kmph());
   Serial.println(data);
   if(WiFi.status()== WL_CONNECTED){
     HTTPClient http;
