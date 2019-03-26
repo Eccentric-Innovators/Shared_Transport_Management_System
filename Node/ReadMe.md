@@ -2,16 +2,16 @@
 
 This folder contains the Node.js project files for the backend as well as front end of the server.
 
-* **transport_system**
+* **transport_system**<br/>
   The first Node.js code that was made to get the GPS values through MQTT and show them as such on the front end.
 
-* **post_http**
+* **post_http**<br/>
   A test code to check the reception of HTTP POST messages containing GPS data being received and displayed on the front end.
 
-* **GMaps_Tracking**
+* **GMaps_Tracking**<br/>
   A front end test code to check the working of Google Maps JavaScript API.
 
-* **GPS_Maps**
+* **GPS_Maps**<br/>
   The final Node.js server code that contains all of the following features:
   * Hosting the front end with Google Maps JavaScript API
   * Running the Node.js backend which serves the front end HTML file, accepts GPS data through POST method, sends regular coordinate updates to front end, maintains driver, passenger and vehicle info
