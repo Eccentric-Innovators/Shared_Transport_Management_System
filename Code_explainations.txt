@@ -1,0 +1,97 @@
+Explaination of different code files in the project folder:
+
+Node:
+	transport_system:
+		A system for getting values through MQTT and displaying it in the frontend on the browser.
+		ex.html:
+			The frontend HTML page that is displayed to the user which gets the value regularly from the backend and updates it onto the webpage.
+		main.js:
+			The main Node.js file which runs the backend. This is the code that receives MQTT messages and sends them to the frontend.
+	
+	post_http:
+		A system for getting values through HTTP POST request and displaying it in the frontend on the browser.
+		node_modules:
+			Contains the files for the Node.js modules that are required.
+		static:
+			Contains static files such as HTML and images.
+			index.html:
+				The frontend HTML page that is displayed to the user which gets the value regularly from the backend and updates it onto the webpage.
+		index.js:
+			The main Node.js file which runs the backend. This is the code that receives HTTP POST requests and sends the data to the frontend.
+		package.json:
+			The npm project data file.
+	
+	GMaps_Tracking:
+		A system for getting values through MQTT and displaying it on Google Maps in the frontend on the browser.
+		node_modules:
+			Contains the files for the Node.js modules that are required.
+		static:
+			Contains static files such as HTML and images.
+			marker_icon.png:
+				The icon for the map pin.
+		index.html:
+			The frontend HTML page that is displayed to the user which gets the value regularly from the backend and updates it onto the webpage.
+		main.js:
+			The main Node.js file which runs the backend. This is the code that receives MQTT messages and sends them to the frontend.
+	
+	GPS_Maps:
+		The final Node.js server project that integrates HTTP requests, GMaps API and the database.
+		models:
+			Contains the schemas for the different databases.
+			driver.js:
+				Contains the schema for drivers.
+			passenger.js:
+				Contains the schema for passengers.
+			stats.js:
+				Contains the schema for the stats collected.
+			vehicle.js:
+				Contains the schema for vehicless.
+		node_modules:
+			Contains the files for the Node.js modules that are required.
+		routes:
+			Contains the various HTTP routes in order to access the various features of the system.
+			driverRouter.js:
+				The routes on /drivers for manipulating driver data.
+			passengerRouter.js:
+				The routes on /passengers for manipulating passenger data.
+			statsRouter.js:
+				The routes on /stats for adding and retrieving stats.
+			vehicleRouter.js:
+				The routes on /vehicle for manipulating vehicle data.
+		static:
+			Contains static files such as HTML and images.
+			.well-known:
+				Contains SSL verification files.
+			images:
+				Contains the required images.
+				marker_icon.png:
+					The icon for the map pin.
+			index.html:
+				The frontend HTML page that is displayed to the user which gets the value regularly from the backend and updates it onto the webpage.
+			views:
+				HTML template files for handling errors.
+		config.js:
+			Contains required params for running various services.
+		index.js:
+			The main Node.js file which runs the backend, sends the requests to the various routes and manages the databases.
+
+Arduino:
+	Contains the files pertaining to the Arduino and NodeMCU boards.
+	TinyGPS_OTA_MQTT_WiFiMGR:
+		Code for retrieving the GPS values using TinyGPSPlus library and sending the values through MQTT using PubSubClient library. (NodeMCU)
+	TinyGPS_OTA_MQTT_WiFiMGR:
+		Code for retrieving the GPS values using TinyGPSPlus library and sending the values through HTTP POST request using the inbuilt HTTPClient library. (NodeMCU)
+	HTTP_POST_test:
+		Code for checking if the POST messages are being sent from the NodeMCU. (NodeMCU)
+	RFID:
+		Code for getting values from the RFID sensor using Arduino and showing it on the Serial Monitor. (Arduino)
+	lib:
+		Contains required libraries.
+		pubsubclient:
+			Library for MQTT on NodeMCU.
+		RFID:
+			Library to get values from the RFID sensor.
+		TinyGPSPlus:
+			Library to get values from the GPS sensor.
+		WiFiManager:
+			Library to help connect NodeMCU to Wifi sources.
