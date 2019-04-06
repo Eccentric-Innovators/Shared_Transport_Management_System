@@ -17,6 +17,16 @@ var driverRouter = require('./routes/driverRouter');
 var vehicleRouter = require('./routes/vehicleRouter');
 
 var app = express();
+var io = require('socket.io')();
+sockets = [];
+var ws = require('./websock')(io, sockets);
+io.listen(3000);
+
+app.use((req, res, next) => {
+	req.io = io;
+	req.sockets = sockets;
+	next();
+});
 
 app.all('*', (req, res, next) => {
 	if(req.secure) {

@@ -13,7 +13,6 @@ router.use(bodyParser.json());
 
 router.route('/')
 .post((req, res) => {
-    console.log('Incoming stat POST.');
     stats.findOne({createdAt: {'$gte': today.toDate(), '$lte': moment(today).endOf('day').toDate()}, vehicleNo: req.body.vehicleNo})
     .then((stat) => {
         if(stat != null) {
@@ -24,6 +23,11 @@ router.route('/')
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json({result: 'ok'});
+                req.sockets.forEach((socket) => {
+                    if (socket.vehicleNo == req.body.vehicleNo) {
+                        socket.socket.emit('new data', req.body.data);
+                    }
+                });
             }, (err) => {
                 console.log(err);
                 res.statusCode = 0;

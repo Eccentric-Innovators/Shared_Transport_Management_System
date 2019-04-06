@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <script src="./javascripts/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <head profile="http://www.w3.org/2005/10/profile">
 	  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -13,7 +14,8 @@
     </style>
   </head>
   <body>
-    <h3>My Google Maps Demo</h3><br>
+    <h3>My Google Maps Demo</h3>
+    <div id='txt'></div><br>
     Vehicle Number: <input type="text" id="vehicleNo"><br>
     <input type="button" onclick="startTrack()" name="Start" value="Start"><br><br>
     
@@ -35,24 +37,43 @@ window.onload = () => {
 
 function startTrack() {
   console.log(parseInt(document.getElementById('vehicleNo').value));
-setInterval(function() {
-	$.get('/stats', {vehicleNo: parseInt(document.getElementById('vehicleNo').value)}).done((data, status) => {
-		loc = data
-		if (loc != "") {
-			$.get('https://roads.googleapis.com/v1/snapToRoads?path='+loc.lat+','+loc.lng+'&interpolate=true&key='+gkey, function(data, status) {
-				console.log(status)
-				if (data != "") {
-					loc.lat = data.snappedPoints[0].location.latitude
-					loc.lng = data.snappedPoints[0].location.longitude
-					map.setCenter(loc)
-					marker.setPosition(loc)
-				}
-			})
-			/*map.setCenter(loc)
-			marker.setPosition(loc)*/
-		}
-	})
-}, 50);
+  var socket = io("http://"+document.location.hostname+":3000");
+
+  socket.on('connect', () => {
+    document.getElementById('txt').innerHTML = "Socket connected.";
+    socket.emit('vehicleNo', parseInt(document.getElementById('vehicleNo').value));
+  });
+
+  socket.on('disconnect', () => {
+    document.getElementById('txt').innerHTML = "Socket disconnected.";
+  });
+
+  socket.on('new data', (data) => {
+    loc = data
+    if (loc != "") {
+      map.setCenter(loc)
+      marker.setPosition(loc)
+    }
+  });
+
+  /*setInterval(function() {
+    $.get('/stats', {vehicleNo: parseInt(document.getElementById('vehicleNo').value)}).done((data, status) => {
+      loc = data
+      if (loc != "") {
+        $.get('https://roads.googleapis.com/v1/snapToRoads?path='+loc.lat+','+loc.lng+'&interpolate=true&key='+gkey, function(data, status) {
+          console.log(status)
+          if (data != "") {
+            loc.lat = data.snappedPoints[0].location.latitude
+            loc.lng = data.snappedPoints[0].location.longitude
+            map.setCenter(loc)
+            marker.setPosition(loc)
+          }
+        })
+        /*map.setCenter(loc)
+        marker.setPosition(loc)
+      }
+    })
+  }, 50);*/
 }
 
 function initMap() {
